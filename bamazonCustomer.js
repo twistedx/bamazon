@@ -110,7 +110,7 @@ function SomethingElse() {
               quantity = parseInt(res[i].quantity);
             }
 
-            if (answer.howMuch > res.quantity || res.quantity <= 0) {
+            if (answer.howMuch > quantity || quantity <= 0) {
               console.log("Insufficient Inventory");
             } else {
               let doMath = price * answer.howMuch;

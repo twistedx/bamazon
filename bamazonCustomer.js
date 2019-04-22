@@ -33,23 +33,42 @@ function start() {
     connection.query("SELECT * FROM products", function(err, res) {
       if (err) throw err;
       for (var i = 0; i < res.length; i++) {
-        console.log(
-          " " +
-            chalk.blue(res[i].id) +
-            "\n" +
-            chalk.green(" Product name: ") +
-            res[i].productName +
-            "\n" +
-            chalk.green(" Department: ") +
-            res[i].department +
-            "\n" +
-            chalk.yellow(" price: ") +
-            res[i].price +
-            "\n" +
-            chalk.yellow(" Quantity: ") +
-            res[i].quantity +
-            "\n"
-        );
+        if (res[i].quantity <= 0) {
+          console.log(
+            " " +
+              chalk.blue(res[i].id) +
+              "\n" +
+              chalk.green(" Product name: ") +
+              res[i].productName +
+              "\n" +
+              chalk.green(" Department: ") +
+              res[i].department +
+              "\n" +
+              chalk.yellow(" price: ") +
+              res[i].price +
+              "\n" +
+              chalk.red(" Quantity: Backordered ") +
+              "\n"
+          );
+        } else {
+          console.log(
+            " " +
+              chalk.blue(res[i].id) +
+              "\n" +
+              chalk.green(" Product name: ") +
+              res[i].productName +
+              "\n" +
+              chalk.green(" Department: ") +
+              res[i].department +
+              "\n" +
+              chalk.yellow(" price: ") +
+              res[i].price +
+              "\n" +
+              chalk.yellow(" Quantity: ") +
+              res[i].quantity +
+              "\n"
+          );
+        }
       }
       SomethingElse();
     });
@@ -61,7 +80,8 @@ function SomethingElse() {
     .prompt([
       {
         name: "id",
-        message: "What do you want to purchase.",
+        message:
+          "What do you want to purchase. If you want to exit, type it and hit enter twice.",
         type: "input"
       },
       {
@@ -90,7 +110,7 @@ function SomethingElse() {
               quantity = parseInt(res[i].quantity);
             }
 
-            if (answer.howMuch > res.quantity || res.quantity < 0) {
+            if (answer.howMuch > res.quantity || res.quantity <= 0) {
               console.log("Insufficient Inventory");
             } else {
               let doMath = price * answer.howMuch;
